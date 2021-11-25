@@ -1,11 +1,11 @@
-import React, { useEffect, useState, FC } from 'react'
+import React, { useEffect, useState, FC, useContext } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import {
   CognitoUser,
   CognitoUserAttribute,
-  AuthenticationDetails
-} from "amazon-cognito-identity-js"
+  AuthenticationDetails,
+} from 'amazon-cognito-identity-js'
 import { getUserPool } from '../../utilities/aws'
 import { URL } from '@/common/constants/url'
 import Layout from '@/components/Layout'
@@ -23,14 +23,15 @@ import { Input, Textarea } from '@/components/elements/Input'
 
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
+import { AuthContext } from '@/auth/AuthProvider'
 
 const Login: FC = () => {
   const router = useRouter()
+  const auth = useContext(AuthContext)
 
   useEffect(() => {
-    const user = getUserPool().getCurrentUser()
-    if (user) {
-      user && router.push('/')
+    if (auth.currentUser) {
+      router.push('/')
     }
   }, [])
 
@@ -46,12 +47,12 @@ const Login: FC = () => {
   const onSubmit = async (values) => {
     const { email, password } = values
     const authenticationDetails = new AuthenticationDetails({
-      Username : email,
-      Password : password
+      Username: email,
+      Password: password,
     })
     const cognitoUser = new CognitoUser({
       Username: email,
-      Pool: getUserPool()
+      Pool: getUserPool(),
     })
 
     cognitoUser.authenticateUser(authenticationDetails, {
@@ -64,7 +65,12 @@ const Login: FC = () => {
       onFailure: (err) => {
         console.error(err)
         alert(err.message)
-      }
+      },
+      // newPasswordRequired: function (userAttributes, requiredAttributes) {
+      //   // コンソールからユーザを登録した場合、初回認証時に強制的にパスワードを変える必要がある。
+      //   // https://qiita.com/k_hoso/items/afe9aa8183b8bf0651a1
+      //   cognitoUser.completeNewPasswordChallenge('Test@1234', {}, this)
+      // },
     })
   }
 

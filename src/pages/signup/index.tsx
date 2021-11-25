@@ -1,11 +1,7 @@
-import React, { useEffect, useState, FC } from 'react'
+import React, { useEffect, useState, FC, useContext } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import {
-  CognitoUser,
-  CognitoUserAttribute,
-  AuthenticationDetails
-} from "amazon-cognito-identity-js"
+import { CognitoUserAttribute } from 'amazon-cognito-identity-js'
 import { getUserPool } from '@/utilities/aws'
 import { URL } from '@/common/constants/url'
 import Layout from '@/components/Layout'
@@ -23,14 +19,15 @@ import { Input, Textarea } from '@/components/elements/Input'
 
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
+import { AuthContext } from '@/auth/AuthProvider'
 
 const SignUp: FC = () => {
   const router = useRouter()
+  const auth = useContext(AuthContext)
 
   useEffect(() => {
-    const user = getUserPool().getCurrentUser()
-    if (user) {
-      user && router.push('/')
+    if (auth.currentUser) {
+      router.push('/')
     }
   }, [])
 
@@ -48,8 +45,8 @@ const SignUp: FC = () => {
     const attributeList = [
       new CognitoUserAttribute({
         Name: 'email',
-        Value: email
-      })
+        Value: email,
+      }),
     ]
     getUserPool().signUp(email, password, attributeList, [], (err, result) => {
       if (err) {
