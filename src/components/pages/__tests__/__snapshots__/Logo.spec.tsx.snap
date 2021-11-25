@@ -5,12 +5,10 @@ exports[`Logo 1`] = `
   className="header-logo"
 >
   <Link
-    href="https://localhost/"
+    href="http://localhost:3000/"
   >
     <a>
-      <styled.h1>
-        nextjs-typescript-firebase
-      </styled.h1>
+      <styled.h1 />
     </a>
   </Link>
 </div>

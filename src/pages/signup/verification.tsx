@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import {
   CognitoUser,
   CognitoUserAttribute,
-  AuthenticationDetails
-} from "amazon-cognito-identity-js"
+  AuthenticationDetails,
+} from 'amazon-cognito-identity-js'
 import { getUserPool } from '@/utilities/aws'
 import { URL } from '@/common/constants/url'
 import Layout from '@/components/Layout'
@@ -47,7 +47,7 @@ const Verification: FC = () => {
     const { email, verificationCode } = values
     const cognitoUser = new CognitoUser({
       Username: email,
-      Pool: getUserPool()
+      Pool: getUserPool(),
     })
     cognitoUser.confirmRegistration(verificationCode, true, (err: any) => {
       if (err) {

@@ -13,7 +13,7 @@ const Logo: React.FC = () => {
     <div className="header-logo">
       <Link href={URL.HOME}>
         <a>
-          <Title>nextjs-typescript-firebase</Title>
+          <Title>{process.env.APP_NAME}</Title>
         </a>
       </Link>
     </div>
