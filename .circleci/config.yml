@@ -1,7 +1,7 @@
 version: 2.1
 executors:
   default:
-    working_directory: ~/nextjs-typescript-firebase
+    working_directory: ~/nextjs-typescript-aws
     docker:
       - image: node:14
 
@@ -18,7 +18,7 @@ commands:
           name: Cache npm dependencies
           key: npm-{{ checksum "yarn.lock" }}
           paths:
-            - ~/nextjs-typescript-firebase/node_modules
+            - ~/nextjs-typescript-aws/node_modules
 
 jobs:
   setup:
