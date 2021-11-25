@@ -34,7 +34,7 @@ const request = async (
       throw new Error(error)
     }
   })
-  // console.log('Response:%s', JSON.stringify(response.data))
+  console.log('Response:%s', JSON.stringify(response.data))
   return JSON.parse(response?.data)
 }
 

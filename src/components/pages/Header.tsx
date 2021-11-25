@@ -1,6 +1,6 @@
 import React, { useContext, FC } from 'react'
 import Link from 'next/link'
-import { getAuth } from '@/utilities/firebase'
+import { getUserPool } from '@/utilities/aws'
 import { URL } from '@/common/constants/url'
 import Logo from '@/components/pages/Logo'
 import { toggleMenu, closeMenu } from '@/store/slice/parts'
@@ -22,9 +22,17 @@ const Header: FC = () => {
       return (
         <a
           onClick={() => {
-            getAuth().signOut()
-            router.push(URL.LOGIN)
-            dispatch(closeMenu())
+            const user = getUserPool().getCurrentUser()
+            if (user) {
+              user.signOut()
+              localStorage.clear()
+              console.log('signed out')
+              router.push(URL.LOGIN)
+              dispatch(closeMenu())
+            } else {
+              localStorage.clear()
+              console.log('no user signing in')
+            }
           }}
         >
           ログアウト

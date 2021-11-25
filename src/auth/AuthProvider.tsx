@@ -1,9 +1,12 @@
 import React, { FC, createContext, useEffect, useState, ReactNode } from 'react'
-import { User } from 'firebase'
-import { getAuth } from '../utilities/firebase'
+import {
+  CognitoUser,
+  CognitoUserAttribute
+} from "amazon-cognito-identity-js"
+import { getUserPool } from '../utilities/aws'
 
 type AuthContextProps = {
-  currentUser: User | null | undefined
+  currentUser: CognitoUser | null | undefined
 }
 
 const AuthContext = createContext<AuthContextProps>({ currentUser: undefined })
@@ -14,15 +17,16 @@ type Props = {
 
 const AuthProvider: FC = ({ children }: Props) => {
   const [nowLoading, setNowLoading] = useState<boolean>(true)
-  const [currentUser, setCurrentUser] = useState<User | null | undefined>(
+  const [currentUser, setCurrentUser] = useState<CognitoUser | null | undefined>(
     undefined
   )
 
   useEffect(() => {
-    getAuth().onAuthStateChanged((user) => {
+    const user = getUserPool().getCurrentUser()
+    if (user) {
       setCurrentUser(user)
       setNowLoading(false)
-    })
+    }
   }, [])
 
   return nowLoading ? (

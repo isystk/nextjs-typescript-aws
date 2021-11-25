@@ -24,7 +24,7 @@ import { Input, Textarea } from '@/components/elements/Input'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 
-const SignUp: FC = () => {
+const Verification: FC = () => {
   const router = useRouter()
 
   useEffect(() => {
@@ -39,30 +39,29 @@ const SignUp: FC = () => {
     email: Yup.string().required(
       errorMessage('メールアドレスを入力してください。')
     ),
-    password: Yup.string().required(
-      errorMessage('パスワードを入力してください。')
+    verificationCode: Yup.string().required(
+      errorMessage('認証コードを入力してください。')
     ),
   })
   const onSubmit = async (values) => {
-    const { email, password } = values
-    const attributeList = [
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: email
-      })
-    ]
-    getUserPool().signUp(email, password, attributeList, [], (err, result) => {
+    const { email, verificationCode } = values
+    const cognitoUser = new CognitoUser({
+      Username: email,
+      Pool: getUserPool()
+    })
+    cognitoUser.confirmRegistration(verificationCode, true, (err: any) => {
       if (err) {
-        console.error(err)
+        console.log(err)
         return
       }
+      console.log('verification succeeded')
       router.push(URL.HOME)
     })
   }
 
   const initialValues = {
     email: '',
-    password: '',
+    verificationCode: '',
   }
 
   return (
@@ -107,9 +106,9 @@ const SignUp: FC = () => {
                             </Grid>
                             <Grid item xs={12} sm={6} md={12}>
                               <Input
-                                label="パスワード"
-                                name="password"
-                                type="password"
+                                label="認証コード"
+                                name="verificationCode"
+                                type="verificationCode"
                               />
                             </Grid>
                           </Grid>
@@ -122,7 +121,7 @@ const SignUp: FC = () => {
                               color="primary"
                               type="Submit"
                             >
-                              会員登録する
+                              認証する
                             </Button>
                           </Grid>
                         </CardActions>
@@ -148,4 +147,4 @@ const SignUp: FC = () => {
   )
 }
 
-export default SignUp
+export default Verification

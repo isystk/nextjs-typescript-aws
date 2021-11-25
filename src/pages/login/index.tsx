@@ -1,7 +1,12 @@
 import React, { useEffect, useState, FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { getAuth } from '@/utilities/firebase'
+import {
+  CognitoUser,
+  CognitoUserAttribute,
+  AuthenticationDetails
+} from "amazon-cognito-identity-js"
+import { getUserPool } from '../../utilities/aws'
 import { URL } from '@/common/constants/url'
 import Layout from '@/components/Layout'
 import Head from '@/components/pages/Head'
@@ -23,9 +28,10 @@ const Login: FC = () => {
   const router = useRouter()
 
   useEffect(() => {
-    getAuth().onAuthStateChanged((user) => {
+    const user = getUserPool().getCurrentUser()
+    if (user) {
       user && router.push('/')
-    })
+    }
   }, [])
 
   const errorMessage = (message) => <p className="error">{message}</p>
@@ -39,12 +45,27 @@ const Login: FC = () => {
   })
   const onSubmit = async (values) => {
     const { email, password } = values
-    try {
-      await getAuth().signInWithEmailAndPassword(email, password)
-      router.push(URL.HOME)
-    } catch (err) {
-      alert(err.message)
-    }
+    const authenticationDetails = new AuthenticationDetails({
+      Username : email,
+      Password : password
+    })
+    const cognitoUser = new CognitoUser({
+      Username: email,
+      Pool: getUserPool()
+    })
+
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: (result) => {
+        console.log('result: ' + result)
+        const accessToken = result.getAccessToken().getJwtToken()
+        console.log('AccessToken: ' + accessToken)
+        router.push(URL.HOME)
+      },
+      onFailure: (err) => {
+        console.error(err)
+        alert(err.message)
+      }
+    })
   }
 
   const initialValues = {
