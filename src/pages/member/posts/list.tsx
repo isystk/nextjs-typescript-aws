@@ -46,7 +46,7 @@ const MemberPostsList: FC = () => {
   useEffect(() => {
     ;(async () => {
       const user = auth.currentUser
-      user && (await dispatch(getMemberPosts(user.keyPrefix)))
+      user && (await dispatch(getMemberPosts(user.userDataKey)))
     })()
   }, [dispatch])
 

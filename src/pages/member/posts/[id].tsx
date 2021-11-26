@@ -67,7 +67,10 @@ const MemberPostsEdit: FC = () => {
         </div>
         <div className="entry-content">
           {id && (
-            <MemberPostsForm userId={auth.currentUser.keyPrefix} postId={id} />
+            <MemberPostsForm
+              userId={auth.currentUser.userDataKey}
+              postId={id}
+            />
           )}
         </div>
       </section>

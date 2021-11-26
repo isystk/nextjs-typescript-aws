@@ -649,7 +649,7 @@ table td {
 /* h1 タイトル */
 .contents section .entry-header .entry-title {
   font-size: 2em;
-  padding: 20px;
+  padding: 10px;
   font-weight: bold;
   line-height: 1.2;
 }
@@ -657,7 +657,7 @@ table td {
 @media screen and (min-width:992px){
   .contents section .entry-header .entry-title {
     font-size: 2.5em;
-    padding: 40px;
+    padding: 45px;
   }
 }
   
@@ -668,7 +668,6 @@ table td {
 
 /* 記事内容 */
 .contents section .entry-content {
-  padding: 0 20px;
   font-size: 	1em;
 }
 .contents section .entry-content a{
@@ -677,7 +676,7 @@ table td {
 .contents section .entry-content p {
   line-height: 2;
   letter-spacing: 4px;
-  margin: 10px 0;
+  margin: 10px 10px;
   font-weight: 500;
 }
 
@@ -692,7 +691,6 @@ table td {
   font-size: 1.8em;
   line-height: 1.2;
   font-weight: bold;
-  margin: 60px 0 40px 0;
   clear: both;
 }
 .contents section .entry-content h2:after {
@@ -704,6 +702,13 @@ table td {
   background: -webkit-linear-gradient(to right,$color-strong,$color-light);
   background: linear-gradient(to right,$color-strong,$color-light);
 }
+@media screen and (min-width:992px){
+  .contents section .entry-content h2 {
+    margin: 60px 0 40px 0;
+  }
+}
+
+
 /* サブ見出し h3 */
 .contents section .entry-content h3 {
   font-size: 1.2em;

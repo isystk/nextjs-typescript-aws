@@ -86,6 +86,7 @@ const MemberPostsForm: FC<Props> = (props: Props) => {
 
   if (loading || nowLoading) return <p>...loading</p>
   if (error) return <p>{error}</p>
+  if (postId && post && userId !== post.userId) return <p>Not Found</p>
 
   const initialValues = {
     ...post,
@@ -103,7 +104,7 @@ const MemberPostsForm: FC<Props> = (props: Props) => {
   const onSubmit = async (values) => {
     // ローディング表示
     dispatch(showLoading())
-    const data = { ...values, user_id: userId }
+    const data = { ...values, userId: userId }
     if (isEdit) {
       await dispatch(putMemberPost(postId, data))
     } else {
@@ -150,13 +151,13 @@ const MemberPostsForm: FC<Props> = (props: Props) => {
                 <Form>
                   <CardContent>
                     <Grid item container spacing={1} justifyContent="center">
-                      <Grid item xs={12} sm={6} md={12}>
+                      <Grid item xs={12} sm={12} md={12}>
                         <Input label="タイトル" name="title" type="text" />
                       </Grid>
-                      <Grid item xs={12} sm={6} md={12}>
+                      <Grid item xs={12} sm={12} md={12}>
                         <Textarea label="本文" name="description" />
                       </Grid>
-                      <Grid item xs={12} sm={6} md={12}>
+                      <Grid item xs={12} sm={12} md={12}>
                         <ImageFile label="写真" name="photo" />
                       </Grid>
                     </Grid>
