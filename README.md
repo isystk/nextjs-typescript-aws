@@ -12,7 +12,19 @@
 Next.js ＆ AWS の学習用サンプルアプリケーションです。
 
 
+### 利用している技術
+
+- Next.js 10 (React.js 16)
+- typescript 4
+- material-ui
+- redux-toolkit
+- aws-cognito
+- aws-lambda
+
+
 ## 🌐 Demo
+
+https://nextjs-typescript-aws.vercel.app/
 
 ![投稿一覧画面](./app1.png "投稿一覧画面")
 ![投稿画面](./app2.png "投稿画面")
