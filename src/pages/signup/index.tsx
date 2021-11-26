@@ -53,7 +53,7 @@ const SignUp: FC = () => {
         console.error(err)
         return
       }
-      router.push(URL.HOME)
+      router.push(URL.SIGNUP_VERIFICATION)
     })
   }
 

@@ -43,12 +43,10 @@ const MemberPostsList: FC = () => {
     }
   }, [])
 
-  if (loading || nowLoading) return <p>...loading</p>
-
   useEffect(() => {
     ;(async () => {
       const user = auth.currentUser
-      await dispatch(getMemberPosts(user.keyPrefix))
+      user && (await dispatch(getMemberPosts(user.keyPrefix)))
     })()
   }, [dispatch])
 
@@ -68,6 +66,7 @@ const MemberPostsList: FC = () => {
     )
   })
 
+  if (loading || nowLoading) return <p>...loading</p>
   if (error) return <p>{error}</p>
 
   const renderPosts = (): JSX.Element => {
