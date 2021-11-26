@@ -51,7 +51,7 @@ jobs:
       - run:
           name: Build
           command: |-
-            cp .env.examle .env
+            cp .env.example .env
             yarn build
       - save_npm
 
@@ -64,6 +64,22 @@ jobs:
       - run:
           name: Test
           command: yarn test
+      - save_npm
+
+  deploy:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_npm
+      - run:
+          name: deploy to now
+          command: |
+            if [ ! ${CIRCLE_BRANCH} = master ]; then
+              yarn deploy:preview
+            else
+              yarn deploy:production
+            fi
       - save_npm
 
 workflows:
@@ -80,3 +96,12 @@ workflows:
       - test:
           requires:
             - build
+      - deploy:
+          name: Deploy to production
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+
