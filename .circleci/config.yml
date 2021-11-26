@@ -90,12 +90,12 @@ workflows:
       - lint:
           requires:
             - setup
-      - build:
-          requires:
-            - lint
+#      - build:
+#          requires:
+#            - lint
       - test:
           requires:
-            - build
+            - lint
       - deploy:
           name: Deploy to production
           requires:
