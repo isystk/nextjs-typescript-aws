@@ -32,16 +32,23 @@ const MemberPostsList: FC = () => {
   const auth = useContext(AuthContext)
   const dispatch = useDispatch()
   const { loading, error, items } = useSelector(selectMemberPosts)
+  const [nowLoading, setNowLoading] = useState<boolean>(true)
 
-  const user = auth.currentUser
-  if (!user) {
-    router.push('/login')
-    return <></>
-  }
+  useEffect(() => {
+    const user = auth.currentUser
+    if (!user) {
+      router.push(URL.LOGIN)
+    } else {
+      setNowLoading(false)
+    }
+  }, [])
+
+  if (loading || nowLoading) return <p>...loading</p>
 
   useEffect(() => {
     ;(async () => {
-      await dispatch(getMemberPosts(user.uid))
+      const user = auth.currentUser
+      await dispatch(getMemberPosts(user.keyPrefix))
     })()
   }, [dispatch])
 
@@ -61,7 +68,6 @@ const MemberPostsList: FC = () => {
     )
   })
 
-  if (loading) return <p>...loading</p>
   if (error) return <p>{error}</p>
 
   const renderPosts = (): JSX.Element => {
@@ -117,7 +123,7 @@ const MemberPostsList: FC = () => {
             <li>
               <Link href={URL.HOME}>
                 <a>
-                  <FontAwesomeIcon icon="home" />
+                  <FontAwesomeIcon icon="home" style={{ width: 16 }} />
                   <span>HOME</span>
                 </a>
               </Link>

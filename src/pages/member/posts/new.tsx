@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, FC } from 'react'
+import React, { useEffect, useContext, FC, useState } from 'react'
 import { useRouter } from 'next/router'
 import { URL } from '@/common/constants/url'
 import Layout from '@/components/Layout'
@@ -11,11 +11,19 @@ import MemberPostsForm from '@/components/pages/Member/Posts/MemberPostsForm'
 const MemberPostsNew: FC = () => {
   const router = useRouter()
   const auth = useContext(AuthContext)
+  const [nowLoading, setNowLoading] = useState<boolean>(true)
 
-  const user = auth.currentUser
-  if (!user) {
-    router.push(URL.LOGIN)
-    return <></>
+  useEffect(() => {
+    const user = auth.currentUser
+    if (!user) {
+      router.push(URL.LOGIN)
+    } else {
+      setNowLoading(false)
+    }
+  }, [])
+
+  if (nowLoading) {
+    return <>Loading...</>
   }
 
   return (
@@ -30,7 +38,7 @@ const MemberPostsNew: FC = () => {
             <li>
               <Link href={URL.HOME}>
                 <a>
-                  <FontAwesomeIcon icon="home" />
+                  <FontAwesomeIcon icon="home" style={{ width: 16 }} />
                   <span>HOME</span>
                 </a>
               </Link>
@@ -49,7 +57,7 @@ const MemberPostsNew: FC = () => {
           <h1 className="entry-title">投稿登録</h1>
         </div>
         <div className="entry-content">
-          <MemberPostsForm userId={auth.currentUser.uid} />
+          <MemberPostsForm userId={auth.currentUser.keyPrefix} />
         </div>
       </section>
     </Layout>

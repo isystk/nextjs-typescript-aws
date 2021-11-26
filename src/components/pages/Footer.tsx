@@ -44,7 +44,7 @@ const Footer: FC = () => {
               <li>
                 <Link href={URL.HOME}>
                   <a onClick={() => dispatch(closeMenu())}>
-                    <FontAwesomeIcon icon="home" />
+                    <FontAwesomeIcon icon="home" style={{ width: 16 }} />
                   </a>
                 </Link>
               </li>
@@ -56,7 +56,7 @@ const Footer: FC = () => {
                     dispatch(showOverlay())
                   }}
                 >
-                  <FontAwesomeIcon icon="share-alt" />
+                  <FontAwesomeIcon icon="share-alt" style={{ width: 16 }} />
                 </a>
               </li>
               <li>
@@ -67,12 +67,12 @@ const Footer: FC = () => {
                     dispatch(toggleMenu())
                   }}
                 >
-                  <FontAwesomeIcon icon="bars" />
+                  <FontAwesomeIcon icon="bars" style={{ width: 16 }} />
                 </a>
               </li>
               <li>
                 <a href="#" className="js-scroll-top" onClick={scrollToTop}>
-                  <FontAwesomeIcon icon="chevron-up" />
+                  <FontAwesomeIcon icon="chevron-up" style={{ width: 16 }} />
                 </a>
               </li>
             </ul>
@@ -94,7 +94,10 @@ const Footer: FC = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <FontAwesomeIcon icon={['fab', 'github']} />
+                  <FontAwesomeIcon
+                    icon={['fab', 'github']}
+                    style={{ width: 16 }}
+                  />
                   Github
                 </a>
               </li>
@@ -105,7 +108,7 @@ const Footer: FC = () => {
       </footer>
       <span id="page-top" className={scrollTopClass}>
         <a href="#" onClick={scrollToTop}>
-          <FontAwesomeIcon icon="chevron-up" />
+          <FontAwesomeIcon icon="chevron-up" style={{ width: 16 }} />
         </a>
       </span>
     </>

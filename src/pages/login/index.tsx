@@ -112,14 +112,14 @@ const Login: FC = () => {
                             spacing={1}
                             justifyContent="center"
                           >
-                            <Grid item xs={12} sm={6} md={12}>
+                            <Grid item xs={12} sm={12} md={12}>
                               <Input
                                 label="メールアドレス"
                                 name="email"
                                 type="text"
                               />
                             </Grid>
-                            <Grid item xs={12} sm={6} md={12}>
+                            <Grid item xs={12} sm={12} md={12}>
                               <Input
                                 label="パスワード"
                                 name="password"
@@ -145,8 +145,8 @@ const Login: FC = () => {
                   }}
                 </Formik>
                 <CardContent>
-                  <Grid item container spacing={1} justifyContent="center">
-                    <Grid item xs={12} sm={6} md={12}>
+                  <Grid item container spacing={1}>
+                    <Grid item xs={12} sm={6} md={6}>
                       <Link href={URL.SIGNUP}>
                         <a>会員登録はこちら</a>
                       </Link>

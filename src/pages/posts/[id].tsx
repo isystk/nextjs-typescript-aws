@@ -55,7 +55,7 @@ const PostsDetail: FC = () => {
             <li>
               <Link href={URL.HOME}>
                 <a>
-                  <FontAwesomeIcon icon="home" />
+                  <FontAwesomeIcon icon="home" style={{ width: 16 }} />
                   <span>HOME</span>
                 </a>
               </Link>
@@ -81,7 +81,10 @@ const PostsDetail: FC = () => {
         </div>
         <div className="clearfix"></div>
         <div className="entry-meta">
-          <FontAwesomeIcon icon="clock" />
+          <FontAwesomeIcon
+            icon="clock"
+            style={{ width: 16, paddingRight: 10 }}
+          />
           {post && post.regist_data_yyyymmdd}
         </div>
 

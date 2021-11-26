@@ -11,12 +11,16 @@ import MemberPostsForm from '@/components/pages/Member/Posts/MemberPostsForm'
 const MemberPostsEdit: FC = () => {
   const router = useRouter()
   const auth = useContext(AuthContext)
+  const [nowLoading, setNowLoading] = useState<boolean>(true)
 
-  const user = auth.currentUser
-  if (!user) {
-    router.push(URL.LOGIN)
-    return <></>
-  }
+  useEffect(() => {
+    const user = auth.currentUser
+    if (!user) {
+      router.push(URL.LOGIN)
+    } else {
+      setNowLoading(false)
+    }
+  }, [])
 
   const [id, setId] = useState('')
 
@@ -26,6 +30,10 @@ const MemberPostsEdit: FC = () => {
       setId(router.query.id)
     }
   }, [router])
+
+  if (nowLoading) {
+    return <>Loading...</>
+  }
 
   return (
     <Layout>
@@ -39,7 +47,7 @@ const MemberPostsEdit: FC = () => {
             <li>
               <Link href={URL.HOME}>
                 <a>
-                  <FontAwesomeIcon icon="home" />
+                  <FontAwesomeIcon icon="home" style={{ width: 16 }} />
                   <span>HOME</span>
                 </a>
               </Link>
@@ -58,7 +66,9 @@ const MemberPostsEdit: FC = () => {
           <h1 className="entry-title">投稿変更</h1>
         </div>
         <div className="entry-content">
-          {id && <MemberPostsForm userId={auth.currentUser.uid} postId={id} />}
+          {id && (
+            <MemberPostsForm userId={auth.currentUser.keyPrefix} postId={id} />
+          )}
         </div>
       </section>
     </Layout>
