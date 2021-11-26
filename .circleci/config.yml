@@ -50,9 +50,7 @@ jobs:
       - restore_npm
       - run:
           name: Build
-          command: |-
-            cp .env.example .env
-            yarn build
+          command: yarn build
       - save_npm
 
   test:
