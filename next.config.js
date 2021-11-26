@@ -7,7 +7,7 @@ const nextConfig = {
     APP_DESCRIPTION: pkg.description,
     AWS_REGION: process.env.AWS_REGION,
     AWS_USER_POOL_ID: process.env.AWS_USER_POOL_ID,
-    AWS_CLIENT_ID: process.env.AWS_CLIENT_ID,
+    AWS_CLIENT_ID: process.env.AWS_CLIENT_ID
   },
   webpack: (config) => {
     // src ディレクトリをエイリアスのルートに設定
