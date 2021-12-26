@@ -71,6 +71,12 @@ jobs:
       - checkout
       - restore_npm
       - run:
+          name: Build
+          command: npm run build
+      - run:
+          name: Check out
+          command: ls -la out
+      - run:
           name: deploy to now
           command: |
             if [ ! ${CIRCLE_BRANCH} = master ]; then
