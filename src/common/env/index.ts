@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
     envName: 'product',
     internalEndpointUrl: 'https://nextjs-typescript-aws.vercel.app',
     externalEndpointUrl:
-      'https://obew4p54y9.execute-api.ap-northeast-1.amazonaws.com/Prod',
+      'https://0zjddy6il7.execute-api.ap-northeast-1.amazonaws.com/Prod',
   } as IEnv
 } else {
   /** docker でビルドされていない場合は、 .env.local から値を取ってくる */
